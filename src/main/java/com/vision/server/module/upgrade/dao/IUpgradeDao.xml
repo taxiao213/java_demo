@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vision.server.module.upgrade.dao.IUpgradeDao">
+    <update id="createTable">
+        CREATE TABLE upgrade(
+            id int(10) NOT NULL AUTO_INCREMENT,
+            visionType int (10),
+            versionCode int (10),
+            versionName varchar (20),
+            apkSize varchar (20),
+            apkUrl varchar (100),
+            pkgSize varchar (20),
+            pkgUrl varchar (100),
+            PRIMARY KEY(id)
+        )
+    </update>
+
+    <delete id="deleteTable">
+        DROP TABLE IF EXISTS upgrade;
+    </delete>
+
+    <insert id="insertTable" flushCache="true" parameterType="com.vision.server.model.UpgradeModel">
+        INSERT INTO upgrade
+        (visionType,versionCode,versionName,apkSize,apkUrl,pkgSize,pkgUrl)
+        VALUES
+        (#{visionType},#{versionCode},#{versionName},#{apkSize},#{apkUrl},#{pkgSize},#{pkgUrl})
+    </insert>
+
+    <select id="isExistsTable" flushCache="true" resultType="java.lang.Boolean">
+        SELECT count(*) FROM information_schema.TABLES WHERE table_name ='upgrade'
+    </select>
+
+    <select id="queryUpgrade" flushCache="true" resultType="com.vision.server.model.UpgradeModel">
+        SELECT * FROM upgrade
+        WHERE
+        visionType = #{visionType}
+    </select>
+
+    <select id="deleteUpgrade" flushCache="true">
+        DELETE FROM upgrade
+        WHERE
+        visionType = #{visionType}
+    </select>
+</mapper>

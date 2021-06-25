@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vision.server.module.feedback.dao.IFeedBackDao">
+    <update id="createTable">
+        CREATE TABLE feed_back(
+            id int(10) NOT NULL AUTO_INCREMENT,
+            visionType int (10),
+            ip varchar (20),
+            macAddress varchar (30),
+            callProblem int (10),
+            videoBlur int (10),
+            otherVideoIssues int (10),
+            upgradeIssues int (10),
+            otherProblem int (10),
+            audioProblem int (10),
+            dualStream int (10),
+            configurationProblem int (10),
+            cameraProblem int (10),
+            PRIMARY KEY(id)
+        )
+    </update>
+
+    <delete id="deleteTable">
+        DROP TABLE IF EXISTS feed_back;
+    </delete>
+
+    <insert id="insertTable" flushCache="true" >
+        INSERT INTO feed_back
+        (visionType,ip,macAddress,callProblem,videoBlur,otherVideoIssues,upgradeIssues,otherProblem,audioProblem,dualStream,configurationProblem,cameraProblem)
+        VALUES
+        (#{visionType},#{ip},#{macAddress},#{callProblem},#{videoBlur},#{otherVideoIssues},#{upgradeIssues},#{otherProblem},#{audioProblem},#{dualStream},#{configurationProblem},#{cameraProblem})
+    </insert>
+
+    <update id="updateTable" flushCache="true" >
+        UPDATE feed_back SET
+        macAddress = #{macAddress},
+        callProblem = #{callProblem},
+        videoBlur = #{videoBlur},
+        otherVideoIssues = #{otherVideoIssues},
+        upgradeIssues = #{upgradeIssues},
+        otherProblem = #{otherProblem},
+        audioProblem = #{audioProblem},
+        dualStream = #{dualStream},
+        configurationProblem = #{configurationProblem},
+        cameraProblem = #{cameraProblem}
+        WHERE
+        id = #{id}
+        AND
+        visionType = #{visionType}
+    </update>
+
+    <select id="isExistsTable" flushCache="true" resultType="java.lang.Boolean">
+        SELECT count(*) FROM information_schema.TABLES WHERE table_name ='feed_back'
+    </select>
+
+    <select id="queryForMac" flushCache="true" resultType="com.vision.server.model.FeedBackModel">
+        SELECT * FROM feed_back
+        WHERE
+        macAddress = #{macAddress}
+        AND
+        visionType = #{visionType}
+    </select>
+</mapper>

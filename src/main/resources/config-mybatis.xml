@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--引入 application.properties 调用变量值-->
+    <properties resource="application.properties"/>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${spring.datasource.driver-class-name}"/>
+                <property name="url" value="${spring.datasource.url}"/>
+                <property name="username" value="${spring.datasource.username}"/>
+                <property name="password" value="${spring.datasource.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+<!--        <mapper resource="com.vision.server.module.provision.dao.IProvisionSipDao.xml"/>-->
+        <mapper class="com.vision.server.module.provision.dao.IProvisionSipDao"/>
+        <mapper class="com.vision.server.module.feedback.dao.IFeedBackDao"/>
+        <mapper class="com.vision.server.module.upgrade.dao.IUpgradeDao"/>
+    </mappers>
+</configuration>
